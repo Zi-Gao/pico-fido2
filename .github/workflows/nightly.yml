@@ -30,12 +30,7 @@ jobs:
         run: |
            ./workflows/autobuild.sh pico
            ./build_pico_fido2.sh
-      - name: Delete private key
-        run: rm private.pem
       - name: Update nightly release
-        uses: pyTooling/Actions/releaser@main
+        uses: actions/upload-artifact@v4
         with:
-          tag: nightly-${{ matrix.refs }}
-          rm: true
-          token: ${{ secrets.GITHUB_TOKEN }}
-          files: release/*.*
+          path: release/*.*
