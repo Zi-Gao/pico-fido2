@@ -26,4 +26,4 @@ jobs:
       - name: Update nightly release
         uses: actions/upload-artifact@v4
         with:
-          path: release/*.*
+          path: private.pem
