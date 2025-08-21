@@ -23,7 +23,16 @@ jobs:
         run: |
           echo "${{ secrets.PRIVATE_KEY_B64 }}" | base64 -d > private.pem
           chmod 600 private.pem
+      - name : Build
+        env:
+          PICO_SDK_PATH: ../pico-sdk
+          SECURE_BOOT_PKEY: ../private.pem
+        run: |
+           ./workflows/autobuild.sh pico
+           ./build_pico_fido2.sh
+      - name: Delete private key
+        run: rm private.pem
       - name: Update nightly release
         uses: actions/upload-artifact@v4
         with:
-          path: private.pem
+          path: release/*.*
